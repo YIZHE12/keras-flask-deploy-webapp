@@ -29,8 +29,18 @@ MODEL_PATH = 'models/your_model.h5'
 
 # You can also use pretrained model from Keras
 # Check https://keras.io/applications/
-from keras.applications.resnet50 import ResNet50
-model = ResNet50(weights='imagenet')
+# from keras.applications.resnet50 import ResNet50
+# model = ResNet50(weights='imagenet')
+
+# load pre-trained VGG19 model
+base_model = vgg19.VGG19(weights='imagenet') #imports the mobilenet model
+for layer in base_model.layers:
+    layer.trainable=False
+output = base_model.get_layer('fc2').output
+model=Model(inputs=base_model.input, outputs=output)
+model.compile('adam', 'binary_crossentropy')
+
+
 print('Model loaded. Check http://127.0.0.1:5000/')
 
 
@@ -44,7 +54,7 @@ def model_predict(img_path, model):
 
     # Be careful how your trained model deals with the input
     # otherwise, it won't make correct prediction!
-    x = preprocess_input(x, mode='caffe')
+    x = preprocess_input(x)
 
     preds = model.predict(x)
     return preds
@@ -75,7 +85,8 @@ def upload():
         # pred_class = preds.argmax(axis=-1)            # Simple argmax
         pred_class = decode_predictions(preds, top=1)   # ImageNet Decode
         result = str(pred_class[0][0][1])               # Convert to string
-        return result
+        # return result
+        return preds
     return None
 
 
