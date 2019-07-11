@@ -41,8 +41,8 @@ $ docker run -e MODEL_PATH=/mnt/models/your_model.h5  -v volume-name:/mnt/models
 ### Pull an built-image from Docker hub
 For your convenience, can just pull the image instead of building it. 
 ```shell
-$ docker pull physhik/keras-flask-app:2 
-$ docker run -d -p 5000:5000 physhik/keras-flask-app:2
+$ docker pull echeng1212/keras_flask_app:insightdemo
+$ docker run -d -p 5000:5000 echeng1212/keras_flask_app:insightdemo
 ```
 Open http://localhost:5000 after waiting for a minute to install in the container.
 
