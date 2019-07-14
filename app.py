@@ -96,7 +96,7 @@ def model2_predict(preds, model2):
         # add other data to get the data distribution for normalization
         preds2 = normalize(preds2)
         preds2 = scale(preds2)
-        results = model2.predict(preds2)
+        results = model2.predict(preds2, batch_size = 5)
         return(results[0,:]) # only return the first sample which is the new sample
 
 
